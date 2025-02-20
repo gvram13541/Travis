@@ -12,7 +12,7 @@ cd DEMO
 
 sed -i.bak "s/api_spec_version: r/*/api_spec_version: $rNumber/g" env.yaml
 
-git checkout -b new_branch
+git switch new_branch || checkout -b new_branch
 git add .
 git commit -m "new commit"
 git push origin new_branch
