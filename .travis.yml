@@ -29,6 +29,9 @@ before_script:
   - eval $(ssh-agent -s)  # Start the SSH agent
   - ssh-add ~/.ssh/id_rsa  # Add the SSH key to the agent
 
+  # Authenticate GitHub CLI using the GitHub token (stored as a Travis environment variable)
+  - echo "$GH_TOKEN" | gh auth login --with-token
+
 jobs:
   include:
     #running the python script

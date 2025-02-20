@@ -17,13 +17,16 @@ while IFS= read -r rNumber || [ -n "$rNumber" ]; do
     echo "Release Number: $rNumber"
 done < releaseNumber.txt
 
+# Debugging: Check if rNumber is empty or not
+echo "DEBUG: Release number: '$rNumber'"
+
 # Clone the DEMO repository
 echo "Cloning the DEMO repository..."
 git clone "git@github.com:gvram13541/DEMO.git"
 cd DEMO
 
 # Ensure the new branch name is valid and switch to it (use 'git checkout -b' for compatibility)
-git checkout -b "$rNumber" || git checkout "$rNumber"
+git checkout -b new_branch || git checkout new_branch
 
 # Modify the env.yaml file
 sed -i.bak "s/api_spec_version: r\*/api_spec_version: $rNumber/g" env.yaml
