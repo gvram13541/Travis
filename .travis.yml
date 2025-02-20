@@ -10,7 +10,6 @@ install:
   - source ~/.nvm/nvm.sh  
   - nvm install 16  
   - node --version  
-  - npm install  
 
 jobs:
   include:
