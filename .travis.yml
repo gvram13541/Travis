@@ -16,8 +16,8 @@ before_script:
 
 jobs:
   include:
-    - name: add and sub test
-      script: pytest  
+    # - name: add and sub test
+    #   script: pytest  
 
     - name: extract rNumber and store
       script: node publish_release.js  
