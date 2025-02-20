@@ -11,6 +11,9 @@ install:
   - nvm install 16  
   - node --version  
 
+before_script: 
+  - chmod +x script.sh
+
 jobs:
   include:
     - name: add and sub test

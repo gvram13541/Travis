@@ -9,7 +9,6 @@ if(latestReleaseTag === undefined){
     nextReleaseTag = "r" + (parseInt(releaseNumber)+1)
 }
 
-console.log(releaseNumber)
 console.log("new Tage", nextReleaseTag)
 
 fs.writeFile('releaseNumber.txt', nextReleaseTag, (err) => {
