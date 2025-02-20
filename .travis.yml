@@ -14,7 +14,7 @@ install:
   # Install GitHub CLI (gh) via the official GitHub CLI installation script
   - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /usr/share/keyrings/githubcli-archive-keyring.gpg > /dev/null
   - sudo apt update
-  - snap install gh
+  - sudo snap install gh
 
 before_script:
   - chmod +x script.sh  # Ensure script.sh is executable
