@@ -17,7 +17,10 @@ while IFS= read -r rNumber || [ -n "$rNumber" ]; do
     echo "Release Number: $rNumber"
 done < releaseNumber.txt
 
-cat releaseNumber.txt
+cat releaseNumber.txt > "$rNum"
+
+echo "$rNum"
+
 # Debugging: Check if rNumber is empty or not
 echo "DEBUG: Release number: '$rNumber'"
 
@@ -35,7 +38,7 @@ sed -i.bak "s/api_spec_version: r\*/api_spec_version: $rNumber/g" env.yaml
 # Stage, commit, and push the changes
 git add .
 git commit -m "New commit with release number $rNumber"
-git push origin "$rNumber"
+git push origin new_branch
 
 # Create a pull request using the GitHub CLI (gh)
 echo "Creating a pull request..."
