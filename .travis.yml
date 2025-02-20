@@ -1,32 +1,3 @@
-# language: python
-
-# python:
-#   - "3.9"
-
-# install:
-#   - pip install -r requirements.txt
-  
-#   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash  
-#   - source ~/.nvm/nvm.sh  
-#   - nvm install 16  
-#   - node --version  
-
-# before_script: 
-#   - chmod +x script.sh
-
-# jobs:
-#   include:
-#     - name: add and sub test
-#       script: pytest  
-
-#     - name: extract rNumber and store
-#       script: node publish_release.js  
-
-#     - name: making pull request
-#       script: ./script.sh  
-
-
-
 language: python
 
 python:
@@ -40,10 +11,9 @@ install:
   - nvm install 16  
   - node --version  
 
-  # Install GitHub CLI (gh)
-  - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /usr/share/keyrings/github.asc
-  - sudo apt-key add /usr/share/keyrings/github.asc
-  - sudo apt-add-repository https://cli.github.com/packages
+  # Install GitHub CLI (gh) in a directory with write access
+  - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee ~/githubcli-archive-keyring.gpg
+  - sudo mv ~/githubcli-archive-keyring.gpg /usr/share/keyrings/github.asc
   - sudo apt-get update
   - sudo apt-get install gh  # Install GitHub CLI
 
@@ -52,9 +22,6 @@ before_script:
 
 jobs:
   include:
-    - name: add and sub test
-      script: pytest
-
     # Step for extracting release number and storing it
     - name: extract rNumber and store
       script: node publish_release.js  # Run your Node.js script to create the releaseNumber.txt file
