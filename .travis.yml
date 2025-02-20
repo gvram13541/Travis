@@ -31,7 +31,10 @@ before_script:
 
   # Authenticate GitHub CLI using the GitHub token (stored as a Travis environment variable)
   # - gh auth login --with-token <<< "$GH_TOKEN"  # Using here-string for input
-  - echo "$GH_TOKEN" | gh auth login --with-token  # Authenticate using the GitHub token
+  # - echo "$GH_TOKEN" | gh auth login --with-token  # Authenticate using the GitHub token
+  # Just ensure the GH_TOKEN is set in the environment, GitHub CLI will pick it up
+  - echo "Authenticating with GH_TOKEN"
+  - export GH_TOKEN="$GH_TOKEN"  # Make sure GH_TOKEN is set in the environment
 
 jobs:
   include:
