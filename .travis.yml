@@ -22,10 +22,15 @@ jobs:
     #running the python script
     - name: sub and add test
       script: pytest
-      
+
     # Step for extracting release number and storing it
     - name: extract rNumber and store
-      script: node publish_release.js  # Run your Node.js script to create the releaseNumber.txt file
+      # script: node publish_release.js  # Run your Node.js script to create the releaseNumber.txt file
+      script: |
+        node publish_release.js  # Run your Node.js script to create the releaseNumber.txt file
+        echo "Files in current directory:"
+        ls -l   # List files in the directory to check if releaseNumber.txt exists
+
 
     # Step for making a pull request (call the script directly instead of from within itself)
     - name: making pull request
