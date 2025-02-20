@@ -11,17 +11,18 @@ install:
   - nvm install 16  
   - node --version  
 
-  # Install GitHub CLI (gh) in a directory with write access
-  - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee ~/githubcli-archive-keyring.gpg
-  - sudo mv ~/githubcli-archive-keyring.gpg /usr/share/keyrings/github.asc
-  - sudo apt-get update
-  - sudo apt-get install gh  # Install GitHub CLI
+  # Install GitHub CLI (gh) via the official GitHub CLI installation script
+  - curl -fsSL https://cli.github.com/install.sh | bash
 
 before_script:
   - chmod +x script.sh  # Ensure script.sh is executable
 
 jobs:
   include:
+    #running the python script
+    - name: sub and add test
+      script: pytest
+      
     # Step for extracting release number and storing it
     - name: extract rNumber and store
       script: node publish_release.js  # Run your Node.js script to create the releaseNumber.txt file
