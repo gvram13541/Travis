@@ -54,12 +54,6 @@ git status
 git add .
 git commit -m "New commit with release number $rNumber"
 
-# # Check if any changes were committed
-# if git diff --quiet; then
-#     echo "No changes to commit. Exiting."
-#     exit 0
-# fi
-
 git push origin "$rNumber"
 
 # Create a pull request using the GitHub CLI (gh)
