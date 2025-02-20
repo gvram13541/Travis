@@ -12,9 +12,9 @@ install:
   - node --version  
 
   # Install GitHub CLI (gh) via the official GitHub CLI installation script
-  - sudo apt-get update
-  - sudo apt-get install gh -y
-  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash  
+  - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /usr/share/keyrings/githubcli-archive-keyring.gpg > /dev/null
+  - sudo apt update
+  - sudo apt install gh -y
 
 before_script:
   - chmod +x script.sh  # Ensure script.sh is executable
