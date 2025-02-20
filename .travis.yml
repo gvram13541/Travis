@@ -1,20 +1,24 @@
 language: python
 
 python:
-  - "3.9"  
+  - "3.9"
 
 install:
-  - pip install -r requirements.txt 
-  - nvm install node
-  - npm install
+  - pip install -r requirements.txt
+  
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash  
+  - source ~/.nvm/nvm.sh  
+  - nvm install 16  
+  - node --version  
+  - npm install  
 
 jobs:
   include:
     - name: add and sub test
-    - script: pytest
+      script: pytest  
 
     - name: extract rNumber and store
-    - script: node publish_release.js
+      script: node publish_release.js  
 
-    - name: making pul request
-    - script: script.sh
+    - name: making pull request
+      script: ./script.sh  
