@@ -13,13 +13,18 @@ else
 fi
 
 # Read release number from the file and use it
-while IFS= read -r rNumber || [ -n "$rNumber" ]; do
-    echo "Release Number: $rNumber"
-done < releaseNumber.txt
+# while IFS= read -r rNumber || [ -n "$rNumber" ]; do
+#     echo "Release Number: $rNumber"
+# done < releaseNumber.txt
 
-cat releaseNumber.txt > "$rNum"
+cat releaseNumber.txt
 
-echo "$rNum"
+# Read release number from the file and use it
+rNumber=$(cat releaseNumber.txt)
+echo "Release Number: $rNumber"
+
+# Debugging: Check if rNumber is empty or not
+echo "DEBUG: Release number: '$rNumber'"
 
 # Debugging: Check if rNumber is empty or not
 echo "DEBUG: Release number: '$rNumber'"
