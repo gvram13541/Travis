@@ -30,7 +30,7 @@ before_script:
   - ssh-add ~/.ssh/id_rsa  # Add the SSH key to the agent
 
   # Authenticate GitHub CLI using the GitHub token (stored as a Travis environment variable)
-  - gh auth login --with-token <<< "$GH_TOKEN"
+  - echo "$GH_TOKEN" | gh auth login --with-token
 
 jobs:
   include:
