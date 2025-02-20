@@ -26,9 +26,6 @@ echo "Release Number: $rNumber"
 # Debugging: Check if rNumber is empty or not
 echo "DEBUG: Release number: '$rNumber'"
 
-# Debugging: Check if rNumber is empty or not
-echo "DEBUG: Release number: '$rNumber'"
-
 # Clone the DEMO repository
 echo "Cloning the DEMO repository..."
 git clone "git@github.com:gvram13541/DEMO.git"
@@ -47,4 +44,4 @@ git push origin new_branch
 
 # Create a pull request using the GitHub CLI (gh)
 echo "Creating a pull request..."
-gh pr create --repo gvram13541/DEMO --base main --head "$rNumber" --title "New PR with $rNumber" --body "Automated PR from Travis for release $rNumber"
+gh pr create --repo gvram13541/DEMO --base main --head new_branch --title "New PR with $rNumber" --body "Automated PR from Travis for release $rNumber"
