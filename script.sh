@@ -2,6 +2,7 @@
 
 echo "Running in Travis Pipeline"
 
+# Check if releaseNumber.txt exists
 echo "Checking if releaseNumber.txt exists in the current directory: $(pwd)"
 ls -l  # List files in the current directory to verify if releaseNumber.txt exists
 
@@ -12,35 +13,55 @@ else
     exit 1
 fi
 
-# Read release number from the file and use it
-# while IFS= read -r rNumber || [ -n "$rNumber" ]; do
-#     echo "Release Number: $rNumber"
-# done < releaseNumber.txt
-
-cat releaseNumber.txt
-
-# Read release number from the file and use it
+# Read the release number from the file
 rNumber=$(cat releaseNumber.txt)
 echo "Release Number: $rNumber"
 
 # Debugging: Check if rNumber is empty or not
 echo "DEBUG: Release number: '$rNumber'"
 
+if [ -z "$rNumber" ]; then
+    echo "Release number is empty. Exiting."
+    exit 1
+fi
+
 # Clone the DEMO repository
 echo "Cloning the DEMO repository..."
 git clone "git@github.com:gvram13541/DEMO.git"
 cd DEMO
 
-# Modify the env.yaml file
+# Check if the branch already exists
+if git rev-parse --verify "$rNumber" > /dev/null 2>&1; then
+    echo "Branch $rNumber exists. Checking out the branch."
+    git checkout "$rNumber"
+else
+    echo "Branch $rNumber does not exist. Creating a new branch."
+    git checkout -b "$rNumber"
+fi
+
+# Modify the env.yaml file with the release number
+echo "Modifying the env.yaml file..."
 sed -i.bak "s/api_spec_version: r\*/api_spec_version: $rNumber/g" env.yaml
 
-# Ensure the new branch name is valid and switch to it (use 'git checkout -b' for compatibility)
-git checkout -b new_branch || git checkout new_branch
+# Debugging: Ensure the file has been modified
+echo "Content of env.yaml after modification:"
+cat env.yaml
+
+# Check if there are any changes to commit
+git status
+
 # Stage, commit, and push the changes
 git add .
 git commit -m "New commit with release number $rNumber"
-git push origin new_branch
+
+# Check if any changes were committed
+if git diff --quiet; then
+    echo "No changes to commit. Exiting."
+    exit 0
+fi
+
+git push origin "$rNumber"
 
 # Create a pull request using the GitHub CLI (gh)
 echo "Creating a pull request..."
-gh pr create --repo gvram13541/DEMO --base main --head new_branch --title "New PR with $rNumber" --body "Automated PR from Travis for release $rNumber"
+gh pr create --repo gvram13541/DEMO --base main --head "$rNumber" --title "New PR with $rNumber" --body "Automated PR from Travis for release $rNumber"
