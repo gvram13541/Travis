@@ -31,12 +31,11 @@ echo "Cloning the DEMO repository..."
 git clone "git@github.com:gvram13541/DEMO.git"
 cd DEMO
 
-# Ensure the new branch name is valid and switch to it (use 'git checkout -b' for compatibility)
-git checkout -b new_branch || git checkout new_branch
-
 # Modify the env.yaml file
 sed -i.bak "s/api_spec_version: r\*/api_spec_version: $rNumber/g" env.yaml
 
+# Ensure the new branch name is valid and switch to it (use 'git checkout -b' for compatibility)
+git checkout -b new_branch || git checkout new_branch
 # Stage, commit, and push the changes
 git add .
 git commit -m "New commit with release number $rNumber"
