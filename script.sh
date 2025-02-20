@@ -2,8 +2,12 @@
 
 echo "Running in Travis Pipeline"
 
-# Check if releaseNumber.txt exists before reading it
-if [ ! -f releaseNumber.txt ]; then
+echo "Checking if releaseNumber.txt exists in the current directory: $(pwd)"
+ls -l  # List files in the current directory to verify if releaseNumber.txt exists
+
+if [ -f "releaseNumber.txt" ]; then
+    echo "Found releaseNumber.txt"
+else
     echo "releaseNumber.txt not found. Exiting."
     exit 1
 fi
