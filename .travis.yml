@@ -12,13 +12,13 @@ install:
   - node --version  
 
   # Install GitHub CLI (gh) via the official GitHub CLI installation script
-  - curl -fsSL https://cli.github.com/install.sh | bash
+  - curl -sL https://aka.ms/install-gh-cli | bash  # Install GitHub CLI (gh)
 
 before_script:
   - chmod +x script.sh  # Ensure script.sh is executable
   - echo "Files in current directory:"  # Debugging step
   - ls -l  # List files to ensure releaseNumber.txt exists
-  
+
   # Decode the SSH private key and add it to the SSH agent
   - mkdir -p ~/.ssh
   - echo "$SSH_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa
