@@ -17,6 +17,7 @@ while IFS= read -r rNumber || [ -n "$rNumber" ]; do
     echo "Release Number: $rNumber"
 done < releaseNumber.txt
 
+cat releaseNumber.txt
 # Debugging: Check if rNumber is empty or not
 echo "DEBUG: Release number: '$rNumber'"
 
