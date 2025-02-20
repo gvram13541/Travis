@@ -41,7 +41,7 @@ fi
 
 # Modify the env.yaml file with the release number
 echo "Modifying the env.yaml file..."
-sed -i.bak "s/api_spec_version: r\*/api_spec_version: $rNumber/g" env.yaml
+sed -i.bak "s/api_spec_version: r[0-9]*/api_spec_version: $rNumber/g" env.yaml
 
 # Debugging: Ensure the file has been modified
 echo "Content of env.yaml after modification:"
