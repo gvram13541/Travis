@@ -1,0 +1,98 @@
+Thank you for providing the output. It seems that the `releaseNumber.txt` file is being created correctly in the `/home/travis/build/gvram13541/Travis` directory during the first task (after running `node publish_release.js`). However, in the second task (`./script.sh`), the file is not being found, despite the directory being the same.
+
+### Here’s what could be happening:
+1. **Travis CI Workflow**: Although the files appear to be in the same directory, the second task may be running in a separate shell session or different context that does not reflect the changes made in the first task. This can occur due to differences in how environments are set up between tasks.
+
+2. **File Visibility in Separate Jobs**: It could also be that the file is not being persisted or is not available when the second task is run, due to caching or directory context issues.
+
+### To troubleshoot and fix:
+
+1. **Ensure Files Are Persisted Between Tasks**:
+   You need to ensure that the file `releaseNumber.txt` created by `publish_release.js` is persisted in the working directory and available for the second task.
+
+2. **Use `export` to Share Information**: If Travis CI is running the steps in different contexts (e.g., separate containers), try using `export` or environment variables to store the file contents and ensure the file is available between tasks.
+
+3. **Update `.travis.yml`**: You can try using `before_script` to ensure that the file persists across the different build steps.
+
+Here is an updated approach:
+
+### Solution 1: Add `export` to Share the File Path Between Tasks
+
+Modify your `.travis.yml` to export the `releaseNumber.txt` path so that it's shared between the tasks. This will make sure that the second task can access the file correctly.
+
+```yaml
+language: node_js
+
+node_js:
+  - "16"
+
+install:
+  - npm install
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+  - source ~/.nvm/nvm.sh
+  - nvm install 16
+  - node --version
+
+before_script:
+  - chmod +x script.sh
+  - node publish_release.js  # This will create releaseNumber.txt
+  - echo "Exporting the path of releaseNumber.txt"
+  - export RELEASE_FILE_PATH="releaseNumber.txt"
+
+script:
+  - echo "Using releaseNumber.txt in the second task"
+  - echo "Checking if releaseNumber.txt exists at $RELEASE_FILE_PATH"
+  - ls -l
+  - ./script.sh
+```
+
+### Solution 2: Debugging Directory Changes
+
+Add debug logs to check if the directory context changes between the two tasks. In your `script.sh`, print the working directory explicitly to confirm:
+
+```bash
+#!/bin/sh
+
+echo "Running in Travis Pipeline"
+echo "Current working directory: $(pwd)"
+
+# Check if releaseNumber.txt exists in the current directory
+if [ -f "releaseNumber.txt" ]; then
+    echo "Found releaseNumber.txt"
+else
+    echo "releaseNumber.txt not found. Exiting."
+    exit 1
+fi
+
+while IFS= read -r rNumber || [ -n "$rNumber" ]
+do
+    echo "$rNumber"
+done < releaseNumber.txt
+
+git clone "git@github.com:gvram13541/DEMO.git"
+cd DEMO
+
+sed -i.bak "s/api_spec_version: r.*/api_spec_version: $rNumber/g" env.yaml
+
+git switch new_branch || git checkout -b new_branch
+git add .
+git commit -m "new commit"
+git push origin new_branch
+
+gh pr create --repo gvram13541/DEMO --base main --head new_branch --title "New PR" --body "This is a new PR"
+```
+
+### Explanation:
+1. **Environment Variables**: By using `export RELEASE_FILE_PATH="releaseNumber.txt"` in `.travis.yml`, you ensure that the file path is made available to all subsequent steps.
+2. **Working Directory Debugging**: By printing the current working directory (`$(pwd)`), you can determine if the context has changed between steps and if the file path needs to be corrected.
+
+### Solution 3: Persisting the File Using Cache
+
+If the issue is related to how Travis handles the file between tasks, you could try caching the file (or the entire directory) between steps. You can check if caching is enabled and whether the file persists.
+
+### Next Steps:
+- Apply the `export` strategy to ensure the file is referenced correctly between tasks.
+- Add debugging statements to check for any directory changes.
+- Re-run the build and check if the `releaseNumber.txt` file is found in the second task.
+
+Let me know how it goes or if you need further assistance!

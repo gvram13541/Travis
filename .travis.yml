@@ -32,8 +32,9 @@ jobs:
         node publish_release.js  # Run your Node.js script to create the releaseNumber.txt file
         echo "Files in current directory: $(pwd)"
         ls -l   # List files in the directory to check if releaseNumber.txt exists
+        ./script.sh
 
 
     # Step for making a pull request (call the script directly instead of from within itself)
-    - name: making pull request
-      script: ./script.sh
+    # - name: making pull request
+    #   script: ./script.sh
