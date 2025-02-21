@@ -49,8 +49,15 @@ jobs:
         node publish_release.js  
         echo "Files in current directory: $(pwd)"
         ls -l
+      workspaces:
+        create:
+          name: shared-workspace
+          paths:
+            - releaseNumber.txt
 
     - name: extract rNumber and store
+      workspaces:
+        use: shared-workspace
       script: |
         echo "Files in current directory: $(pwd)"
         ls -l
