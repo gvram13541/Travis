@@ -5,6 +5,7 @@ python:
 
 install:
   - pip install -r requirements.txt
+
   # Install Node.js using NVM
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash  
   - source ~/.nvm/nvm.sh  
@@ -13,45 +14,35 @@ install:
 
   # Install GitHub CLI (gh) via the official GitHub CLI installation script
   - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /usr/share/keyrings/githubcli-archive-keyring.gpg > /dev/null
-  - sudo apt update
   - sudo snap install gh
 
 before_script:
-  - chmod +x script.sh  # Ensure script.sh is executable
-  - echo "Files in current directory:"  # Debugging step
-  - ls -l  # List files to ensure releaseNumber.txt exists
+  - chmod +x script.sh  
+
+  # DEBUG STEP
+  - echo "Files in current directory:"  
+  - ls -l 
 
   # Decode the SSH private key and add it to the SSH agent
   - mkdir -p ~/.ssh
   - echo "$SSH_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa
+
   - ssh-keyscan github.com >> ~/.ssh/known_hosts  # To avoid "host verification" prompts
   - eval $(ssh-agent -s)  # Start the SSH agent
   - ssh-add ~/.ssh/id_rsa  # Add the SSH key to the agent
 
-  # Authenticate GitHub CLI using the GitHub token (stored as a Travis environment variable)
-  # - gh auth login --with-token <<< "$GH_TOKEN"  # Using here-string for input
-  # - echo "$GH_TOKEN" | gh auth login --with-token  # Authenticate using the GitHub token
-  # Just ensure the GH_TOKEN is set in the environment, GitHub CLI will pick it up
   - echo "Authenticating with GH_TOKEN"
-  - export GH_TOKEN="$GH_TOKEN"  # Make sure GH_TOKEN is set in the environment
+  - export GH_TOKEN="$GH_TOKEN"
 
 jobs:
   include:
-    #running the python script
-    # - name: sub and add test
-    #   script: pytest
+    - name: sub and add test
+      script: pytest
 
-    # Step for extracting release number and storing it
     - name: extract rNumber and store
-      # script: node publish_release.js  # Run your Node.js script to create the releaseNumber.txt file
       script: |
-        node publish_release.js  # Run your Node.js script to create the releaseNumber.txt file
+        node publish_release.js  
         echo "Files in current directory: $(pwd)"
-        ls -l   # List files in the directory to check if releaseNumber.txt exists
+        ls -l
         ./script.sh
-
-
-    # Step for making a pull request (call the script directly instead of from within itself)
-    # - name: making pull request
-    #   script: ./script.sh
