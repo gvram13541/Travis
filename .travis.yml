@@ -35,9 +35,9 @@ before_script:
   - echo "Authenticating with GH_TOKEN"
   - export GH_TOKEN="$GH_TOKEN"
 
-cache: 
-  directories:
-    - $(pwd)
+# cache: 
+#   directories:
+#     - $(pwd)
 
 jobs:
   include:
