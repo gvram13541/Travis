@@ -16,22 +16,36 @@ install:
   - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /usr/share/keyrings/githubcli-archive-keyring.gpg > /dev/null
   - sudo snap install gh
 
-before_script:
-  - chmod +x script.sh  
+# before_script:
+#   - chmod +x script.sh  
 
-  # DEBUG STEP
+#   # DEBUG STEP
+#   - echo "Files in current directory:"  
+#   - ls -l 
+
+#   # Decode the SSH private key and add it to the SSH agent
+#   - mkdir -p ~/.ssh
+#   - echo "$SSH_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa
+#   - chmod 600 ~/.ssh/id_rsa
+
+#   - ssh-keyscan github.com >> ~/.ssh/known_hosts  # To avoid "host verification" prompts
+#   - eval $(ssh-agent -s)  # Start the SSH agent
+#   - ssh-add ~/.ssh/id_rsa  # Add the SSH key to the agent
+
+#   - echo "Authenticating with GH_TOKEN"
+#   - export GH_TOKEN="$GH_TOKEN"
+
+_before_script_setup: &before_script_setup
+  before_script:
+  - chmod +x script.sh  
   - echo "Files in current directory:"  
   - ls -l 
-
-  # Decode the SSH private key and add it to the SSH agent
   - mkdir -p ~/.ssh
   - echo "$SSH_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa
-
-  - ssh-keyscan github.com >> ~/.ssh/known_hosts  # To avoid "host verification" prompts
-  - eval $(ssh-agent -s)  # Start the SSH agent
-  - ssh-add ~/.ssh/id_rsa  # Add the SSH key to the agent
-
+  - ssh-keyscan github.com >> ~/.ssh/known_hosts
+  - eval $(ssh-agent -s)
+  - ssh-add ~/.ssh/id_rsa
   - echo "Authenticating with GH_TOKEN"
   - export GH_TOKEN="$GH_TOKEN"
 
@@ -56,6 +70,7 @@ jobs:
             - releaseNumber.txt
 
     - name: extract rNumber and store
+      <<: *before_script_setup
       workspaces:
         use: shared-workspace
       script: |
