@@ -81,7 +81,7 @@ jobs:
 cron:
   - name: Greeting Job
     schedule:
-      - "16 30 * * *"
+      - "30 6 * * *"
     jobs:
       - name: Wish
         script: |
