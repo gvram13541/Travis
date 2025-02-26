@@ -77,3 +77,12 @@ jobs:
         echo "Files in current directory: $(pwd)"
         ls -l
         ./script.sh
+
+cron:
+  - name: Greeting Job
+    schedule:
+      - 45 10 * * *
+    jobs:
+      - name: Wish
+        script: |
+          echo "Good Morning!"
