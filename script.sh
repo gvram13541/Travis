@@ -53,10 +53,10 @@ git commit -m "New commit with release number $rNumber"
 git push origin "$rNumber"
 
 echo "Creating a pull request..."
-gh pr create --repo gvram13541/DEMO --base main --head "$rNumber" --title "New PR with $rNumber" --body "Automated PR from Travis for release $rNumber" --labels "spec_version" --author "guna"
+gh pr create --repo gvram13541/DEMO --base main --head "$rNumber" --title "New PR with $rNumber" --body "Automated PR from Travis for release $rNumber" --label "spec_version" --author "guna"
 
 echo "All PR's: "
 gh pr list 
 
 echo "Wanted PR's List: "
-gh pr list --state open --author guna --labels spec_version
+gh pr list --state open --author guna --label spec_version
