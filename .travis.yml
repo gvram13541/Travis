@@ -58,16 +58,16 @@ jobs:
     # - name: sub and add test
     #   script: pytest
 
-    # - name: generate releaseNumber.txt file
-    #   script: |
-    #     node publish_release.js  
-    #     echo "Files in current directory: $(pwd)"
-    #     ls -l
-    #   workspaces:
-    #     create:
-    #       name: shared-workspace
-    #       paths:
-    #         - releaseNumber.txt
+    - name: generate releaseNumber.txt file
+      script: |
+        node publish_release.js  
+        echo "Files in current directory: $(pwd)"
+        ls -l
+      workspaces:
+        create:
+          name: shared-workspace
+          paths:
+            - releaseNumber.txt
 
     - name: extract rNumber and store
       <<: *before_script_setup

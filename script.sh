@@ -3,22 +3,22 @@
 echo "Running in Travis Pipeline"
 
 # DEBUG STEP
-# echo "Checking if releaseNumber.txt exists in the current directory: $(pwd)"
-# ls -l
+echo "Checking if releaseNumber.txt exists in the current directory: $(pwd)"
+ls -l
 
-# echo "Finding the release_number.txt file..."
-# if [ -f "releaseNumber.txt" ]; then
-#     echo "Found releaseNumber.txt"
-# else
-#     echo "releaseNumber.txt not found. Exiting."
-#     exit 1
-# fi
+echo "Finding the release_number.txt file..."
+if [ -f "releaseNumber.txt" ]; then
+    echo "Found releaseNumber.txt"
+else
+    echo "releaseNumber.txt not found. Exiting."
+    exit 1
+fi
 
-# echo "Copyting relaese number form text file to variable..."
-# rNumber=$(cat releaseNumber.txt)
-# echo "Release Number: $rNumber"
+echo "Copyting relaese number form text file to variable..."
+rNumber=$(cat releaseNumber.txt)
+echo "Release Number: $rNumber"
 
-rNumber=r10006
+# rNumber=r10006
 
 # DEBUG STEP
 if [ -z "$rNumber" ]; then
