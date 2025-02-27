@@ -39,9 +39,8 @@ if [ -n "$pr_list" ]; then
 
     echo "Creting and changing to new branch..."
     if git rev-parse --verify "$branch" > /dev/null 2>&1; then
-        echo "Branch "$branch"  exists. Checking out the branch."
+        echo "Branch "$branch" exists. Checking out the branch."
         git checkout "$branch" 
-        git pull origin "$branch"
     else
         echo "Branch "$branch" does not exist. Creating a new branch."
         git checkout -b "$branch"
@@ -57,6 +56,7 @@ if [ -n "$pr_list" ]; then
     git status
     git add env.yaml env.yaml.bak
     git commit -m "New commit with release number $rNumber"
+    git pull origin "$branch"
     git push origin "$branch"
 
     echo "All PR's: "
