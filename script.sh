@@ -41,6 +41,7 @@ if [ -n "$pr_list" ]; then
     if git rev-parse --verify "$branch" > /dev/null 2>&1; then
         echo "Branch "$branch"  exists. Checking out the branch."
         git checkout "$branch" 
+        git pull origin "$branch"
     else
         echo "Branch "$branch" does not exist. Creating a new branch."
         git checkout -b "$branch"
