@@ -18,8 +18,6 @@ echo "Copyting relaese number form text file to variable..."
 rNumber=$(cat releaseNumber.txt)
 echo "Release Number: $rNumber"
 
-rNumber=r10012
-
 # DEBUG STEP
 if [ -z "$rNumber" ]; then
     echo "Release number is empty. Exiting."

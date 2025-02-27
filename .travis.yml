@@ -32,8 +32,8 @@ install:
 #   - eval $(ssh-agent -s)  # Start the SSH agent
 #   - ssh-add ~/.ssh/id_rsa  # Add the SSH key to the agent
 
-#   - echo "Authenticating with GH_TOKEN"
-#   - export GH_TOKEN="$GH_TOKEN"
+  - echo "Authenticating with GH_TOKEN"
+  - export GH_TOKEN="$GH_TOKEN"
 
 _before_script_setup: &before_script_setup
   before_script:
