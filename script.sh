@@ -18,6 +18,8 @@ echo "Copyting relaese number form text file to variable..."
 rNumber=$(cat releaseNumber.txt)
 echo "Release Number: $rNumber"
 
+rNumber=r100014
+
 # DEBUG STEP
 if [ -z "$rNumber" ]; then
     echo "Release number is empty. Exiting."
@@ -56,7 +58,7 @@ if [ -n "$pr_list" ]; then
     git status
     git add env.yaml env.yaml.bak
     git commit -m "New commit with release number $rNumber"
-    git pull origin "$branch"
+    # git pull --rebase origin "$branch"
     git push origin "$branch"
 
     echo "All PR's: "
