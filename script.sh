@@ -18,7 +18,7 @@ echo "Copyting relaese number form text file to variable..."
 rNumber=$(cat releaseNumber.txt)
 echo "Release Number: $rNumber"
 
-# rNumber=r100014
+# rNumber=r100015
 
 # DEBUG STEP
 if [ -z "$rNumber" ]; then
@@ -47,6 +47,8 @@ if [ -n "$pr_list" ]; then
         echo "Branch "$branch" does not exist. Creating a new branch."
         git checkout -b "$branch"
     fi
+    
+    git pull --rebase origin "$branch"
 
     echo "Modifying the env.yaml file..."
     sed -i.bak "s/api_spec_version: r[0-9]*/api_spec_version: $rNumber/g" env.yaml
@@ -58,7 +60,6 @@ if [ -n "$pr_list" ]; then
     git status
     git add env.yaml env.yaml.bak
     git commit -m "New commit with release number $rNumber"
-    git pull --rebase origin "$branch"
     git push origin "$branch"
 
     echo "All PR's: "
