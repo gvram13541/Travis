@@ -55,8 +55,11 @@ _before_script_setup: &before_script_setup
 
 jobs:
   include:
-    # - name: sub and add test
-    #   script: pytest
+    - cron:
+      - name: sub and add test
+        schedule: 
+          - "30 6 * * *"
+        script: pytest
 
     - name: generate releaseNumber.txt file
       script: |
