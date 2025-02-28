@@ -58,7 +58,7 @@ if [ -n "$pr_list" ]; then
     git status
     git add env.yaml env.yaml.bak
     git commit -m "New commit with release number $rNumber"
-    # git pull --rebase origin "$branch"
+    git pull --rebase origin "$branch"
     git push origin "$branch"
 
     echo "All PR's: "
