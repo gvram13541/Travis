@@ -18,7 +18,7 @@ echo "Copyting relaese number form text file to variable..."
 rNumber=$(cat releaseNumber.txt)
 echo "Release Number: $rNumber"
 
-rNumber=r100014
+# rNumber=r100014
 
 # DEBUG STEP
 if [ -z "$rNumber" ]; then
