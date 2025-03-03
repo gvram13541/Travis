@@ -55,13 +55,12 @@ _before_script_setup: &before_script_setup
 
 jobs:
   include:
-    - cron:
-      - name: sub and add test
-        schedule: 
-          - "30 6 * * *"
-        script: pytest
+    - name: sub and add test
+      if: type = cron
+      script: pytest
 
     - name: generate releaseNumber.txt file
+      if: type != cron
       script: |
         node publish_release.js  
         echo "Files in current directory: $(pwd)"
@@ -73,6 +72,7 @@ jobs:
             - releaseNumber.txt
 
     - name: extract rNumber and store
+      if: type != cron
       <<: *before_script_setup
       workspaces:
         use: shared-workspace
@@ -81,11 +81,11 @@ jobs:
         ls -l
         ./script.sh
 
-cron:
-  - name: Greeting Job
-    schedule:
-      - "30 6 * * *"
-    jobs:
-      - name: Wish
-        script: |
-          echo "Good Morning!"
+# cron:
+#   - name: Greeting Job
+#     schedule:
+#       - "30 6 * * *"
+#     jobs:
+#       - name: Wish
+#         script: |
+#           echo "Good Morning!"
