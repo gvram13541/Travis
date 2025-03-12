@@ -18,7 +18,7 @@ echo "Running in Travis Pipeline"
 # rNumber=$(cat releaseNumber.txt)
 # echo "Release Number: $rNumber"
 
-rNumber="$process.env.RELEASE_VERSION"
+rNumber="$RELEASE_VERSION"
 
 # DEBUG STEP
 if [ -z "$rNumber" ]; then
