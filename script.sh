@@ -19,6 +19,7 @@ echo "Running in Travis Pipeline"
 # echo "Release Number: $rNumber"
 
 rNumber="$RELEASE_VERSION"
+echo "$rNumber"
 
 # DEBUG STEP
 if [ -z "$rNumber" ]; then
