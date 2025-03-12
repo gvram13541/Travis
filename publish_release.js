@@ -20,6 +20,6 @@ console.log("new Tag: ", nextReleaseTag)
 
 console.log(process.env.RELEASE_VERSION)
 
-process.env.RELEASE_VERSION = "123"
+process.env.RELEASE_VERSION = "r12345"
 
 console.log(process.env.RELEASE_VERSION)
