@@ -15,3 +15,11 @@ fs.writeFile('releaseNumber.txt', nextReleaseTag, (err) => {
     if(err) throw err
     console.log('File releaseNumber.txt has been created with the new release tag.')
 })
+
+console.log("new Tag: ", nextReleaseTag)
+
+console.log(process.env.RELEASE_VERSION)
+
+process.env.RELEASE_VERSION = "123"
+
+console.log(process.env.RELEASE_VERSION)
