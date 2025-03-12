@@ -22,7 +22,7 @@ rNumber="$RELEASE_VERSION"
 
 # DEBUG STEP
 if [ -z "$rNumber" ]; then
-    echo "Release number is empty. Exiting."
+    echo "Release number is empty. Exiting.."
     exit 1
 fi
 
