@@ -39,6 +39,7 @@ if [ -n "$pr_list" ]; then
 
     branch="$pr_list"
     echo "Checking out the branch: $branch"
+    echo "ReleseVersion: $rNumber"
 
     echo "Creting and changing to new branch..."
     if git rev-parse --verify "$branch" > /dev/null 2>&1; then
