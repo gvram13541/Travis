@@ -53,7 +53,7 @@ if [ -n "$pr_list" ]; then
     git pull --rebase origin "$branch"
 
     echo "Modifying the env.yaml file..."
-    sed -i.bak "s/api_spec_version: r[0-9]*/api_spec_version: $rNumber/g" env.yaml
+    sed -i.bak "s/api_spec_version: */api_spec_version: $rNumber/g" env.yaml
     
     echo "Content of env.yaml after modification:"
     cat env.yaml
